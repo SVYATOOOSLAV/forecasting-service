@@ -21,7 +21,8 @@ public class StockPredictorService {
             List<CandleInfo> candles1h,
             List<CandleInfo> candles4h
     ) {
-        int inputSize = (candles5m.size() + candles1h.size() + candles4h.size()) * 5;
+        int inputSize = (candles5m.size() + candles1h.size() + candles4h.size())
+                * CandleInfo.getCountParametersWithoutTime();
 
         MultiLayerConfiguration layerConfig = config.createNetwork(inputSize);
         MultiLayerNetwork model = config.multiLayerNetwork(layerConfig);
@@ -42,28 +43,25 @@ public class StockPredictorService {
         double[][] data = new double[1][inputSize];
 
         int index = 0;
-        for (CandleInfo candle : candles5m) {
-            data[0][index++] = candle.getOpen().doubleValue();
-            data[0][index++] = candle.getClose().doubleValue();
-            data[0][index++] = candle.getHigh().doubleValue();
-            data[0][index++] = candle.getLow().doubleValue();
-            data[0][index++] = candle.getVolume();
-        }
-        for (CandleInfo candle : candles1h) {
-            data[0][index++] = candle.getOpen().doubleValue();
-            data[0][index++] = candle.getClose().doubleValue();
-            data[0][index++] = candle.getHigh().doubleValue();
-            data[0][index++] = candle.getLow().doubleValue();
-            data[0][index++] = candle.getVolume();
-        }
-        for (CandleInfo candle : candles4h) {
-            data[0][index++] = candle.getOpen().doubleValue();
-            data[0][index++] = candle.getClose().doubleValue();
-            data[0][index++] = candle.getHigh().doubleValue();
-            data[0][index++] = candle.getLow().doubleValue();
-            data[0][index++] = candle.getVolume();
-        }
+        index = updateData(candles5m, data, index);
+        index = updateData(candles1h, data, index);
+        updateData(candles4h, data, index);
 
         return Nd4j.create(data);
+    }
+
+    private int updateData(
+            List<CandleInfo> candles,
+            double[][] data,
+            int index
+    ) {
+        for (CandleInfo candle : candles) {
+            data[0][index++] = candle.getOpen().doubleValue();
+            data[0][index++] = candle.getClose().doubleValue();
+            data[0][index++] = candle.getHigh().doubleValue();
+            data[0][index++] = candle.getLow().doubleValue();
+            data[0][index++] = candle.getVolume();
+        }
+        return index;
     }
 }

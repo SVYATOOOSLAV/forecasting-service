@@ -7,3 +7,7 @@ spring:
 client:
   invest:
     token: ${CLIENT_INVEST_TOKEN}
+
+logging:
+  level:
+    by.svyat: DEBUG

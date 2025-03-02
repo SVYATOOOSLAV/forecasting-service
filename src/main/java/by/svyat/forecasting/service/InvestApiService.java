@@ -26,15 +26,12 @@ public class InvestApiService {
     private final MarketDataService marketDataService;
     private final InstrumentsService instrumentsService;
     private final CandleMapper mapper;
+    private final CandlesService candlesService;
 
     public BigDecimal getLastPrice(String tiket) {
         List<InstrumentShort> instruments = instrumentsService.findInstrumentSync(tiket);
 
-        InstrumentShort instrument = instruments.stream()
-                .filter(el -> Boolean.TRUE.equals(el.getApiTradeAvailableFlag()))
-                .filter(stock -> stock.getTicker().equals(tiket))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No such instrument: " + tiket));
+        InstrumentShort instrument = getInstrument(tiket, instruments);
 
         List<LastPrice> lastPrices = marketDataService.getLastPricesSync(List.of(instrument.getUid()));
         var quotation = lastPrices.get(0).getPrice();
@@ -45,38 +42,34 @@ public class InvestApiService {
     public CandlesResponse getCandles(String tiket) {
         List<InstrumentShort> instruments = instrumentsService.findInstrumentSync(tiket);
 
-        InstrumentShort instrument = instruments.stream()
-                .filter(el -> Boolean.TRUE.equals(el.getApiTradeAvailableFlag()))
-                .filter(stock -> stock.getTicker().equals(tiket))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No such instrument: " + tiket));
+        InstrumentShort instrument = getInstrument(tiket, instruments);
 
-        log.info("Successfully find instrument with tiker: {}", instrument.getTicker());
+        log.debug("Successfully find instrument with tiker: {}", instrument.getTicker());
 
-        List<HistoricCandle> candles5min = marketDataService
-                .getCandlesSync(instrument.getUid(), Instant.now().minus(1, ChronoUnit.DAYS), Instant.now(),
-                        CandleInterval.CANDLE_INTERVAL_5_MIN);
+        List<HistoricCandle> candles5min = candlesService.getCandlesByInterval(instrument, CandleInterval.CANDLE_INTERVAL_5_MIN);
 
-        List<HistoricCandle> candlesHour = marketDataService
-                .getCandlesSync(instrument.getUid(), Instant.now().minus(1, ChronoUnit.DAYS), Instant.now(),
-                        CandleInterval.CANDLE_INTERVAL_HOUR);
+        List<HistoricCandle> candlesHour = candlesService.getCandlesByInterval(instrument, CandleInterval.CANDLE_INTERVAL_HOUR);
 
         // В выходные дни доступен диапазон от CANDLE_INTERVAL_1_MIN до CANDLE_INTERVAL_HOUR
-        List<HistoricCandle> candles4hour = marketDataService
-                .getCandlesSync(instrument.getUid(), Instant.now().minus(1, ChronoUnit.DAYS), Instant.now(),
-                        CandleInterval.CANDLE_INTERVAL_4_HOUR);
+        List<HistoricCandle> candles4hour = candlesService.getCandlesByInterval(instrument, CandleInterval.CANDLE_INTERVAL_4_HOUR);
 
         // Если выходной день
         if(candles4hour.isEmpty()){
-            candles4hour = marketDataService
-                    .getCandlesSync(instrument.getUid(), Instant.now().minus(2, ChronoUnit.DAYS), Instant.now(),
-                            CandleInterval.CANDLE_INTERVAL_4_HOUR);
+            candles4hour = candlesService.getCandlesInDayOffStockExchange(instrument, CandleInterval.CANDLE_INTERVAL_4_HOUR);
         }
 
         return new CandlesResponse()
                 .setCandles5minute(candles5min.stream().map(mapper::mapToCandle).toList())
                 .setCandles1hour(candlesHour.stream().map(mapper::mapToCandle).toList())
                 .setCandles4hour(candles4hour.stream().map(mapper::mapToCandle).toList());
+    }
+
+    private InstrumentShort getInstrument(String tiket, List<InstrumentShort> instruments) {
+        return instruments.stream()
+                .filter(el -> Boolean.TRUE.equals(el.getApiTradeAvailableFlag()))
+                .filter(stock -> stock.getTicker().equals(tiket))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No such instrument: " + tiket));
     }
 }
 

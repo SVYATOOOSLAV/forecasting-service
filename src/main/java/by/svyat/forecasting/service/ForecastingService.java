@@ -1,14 +1,9 @@
 package by.svyat.forecasting.service;
 
-import by.svyat.forecasting.common.CandleInfo;
 import by.svyat.forecasting.common.CandlesResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +23,7 @@ public class ForecastingService {
 
         String probabilityUpString = String.format("%.2f%%", probabilityUp);
 
-        log.info("Цена акции пойдет вверх с вероятностью {}", probabilityUpString);
+        log.debug("Цена акции пойдет вверх с вероятностью {}", probabilityUpString);
 
         return probabilityUpString;
     }
