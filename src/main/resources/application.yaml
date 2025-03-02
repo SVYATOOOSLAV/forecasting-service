@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: forecasting-service
+  main:
+    banner-mode: off
+
+client:
+  invest:
+    token: ${CLIENT_INVEST_TOKEN}
