@@ -1,6 +1,7 @@
 package by.svyat.forecasting.service;
 
 import by.svyat.forecasting.common.CandlesResponse;
+import by.svyat.forecasting.common.PredictResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ public class ForecastingService {
     private final InvestApiService investApiService;
     private final StockPredictorService stockPredictorService;
 
-    public String predict(String tiket) {
+    public PredictResponse predict(String tiket) {
         CandlesResponse candles = investApiService.getCandles(tiket);
 
         Double probabilityUp = stockPredictorService.predictPrice(
@@ -21,10 +22,16 @@ public class ForecastingService {
                 candles.getCandles4hour()
         );
 
-        String probabilityUpString = String.format("%.2f%%", probabilityUp);
+        PredictResponse predictResponse = createPredictResponse(probabilityUp);
 
-        log.debug("Цена акции пойдет вверх с вероятностью {}", probabilityUpString);
+        log.debug("Цена акции пойдет вверх с вероятностью {}", predictResponse.getPrediction());
 
-        return probabilityUpString;
+        return predictResponse;
+    }
+
+    private PredictResponse createPredictResponse(Double probabilityUp) {
+        return new PredictResponse().setPrediction(
+                String.format("Цена пойдет вверх с вероятностью: %.2f%%", probabilityUp)
+        );
     }
 }
