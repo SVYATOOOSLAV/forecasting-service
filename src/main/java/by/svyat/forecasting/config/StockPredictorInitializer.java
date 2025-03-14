@@ -10,7 +10,7 @@ import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.nd4j.linalg.activations.Activation;
-import org.nd4j.linalg.learning.config.Sgd;
+import org.nd4j.linalg.learning.config.Adam;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -19,28 +19,32 @@ public class StockPredictorInitializer {
     private static final int OUTPUT_SIZE = 1;
 
     public static MultiLayerConfiguration createNetwork(int inputSize) {
-         return new NeuralNetConfiguration.Builder()
+        return new NeuralNetConfiguration.Builder()
                 .seed(123)
                 .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
-                .updater(new Sgd(0.01))
+                .updater(new Adam(0.001)) // Использование Adam оптимизатора
                 .list()
                 .layer(0, new DenseLayer.Builder()
                         .nIn(inputSize)
                         .nOut(20)
-                        .activation(Activation.SIGMOID)
-                        .weightInit(WeightInit.XAVIER)
+                        .activation(Activation.SIGMOID) // Оставляем SIGMOID
+                        .weightInit(WeightInit.XAVIER)  // Инициализация весов Xavier
+                        .dropOut(0.5)  // Dropout для предотвращения переобучения
+                        .l2(0.0001)    // L2 регуляризация
                         .build())
                 .layer(1, new DenseLayer.Builder()
                         .nIn(20)
                         .nOut(10)
-                        .activation(Activation.SIGMOID)
-                        .weightInit(WeightInit.XAVIER)
+                        .activation(Activation.SIGMOID) // Оставляем SIGMOID
+                        .weightInit(WeightInit.XAVIER)  // Инициализация весов Xavier
+                        .dropOut(0.5)  // Dropout для предотвращения переобучения
+                        .l2(0.0001)    // L2 регуляризация
                         .build())
                 .layer(2, new OutputLayer.Builder(LossFunctions.LossFunction.XENT)
                         .nIn(10)
                         .nOut(OUTPUT_SIZE)
-                        .activation(Activation.SIGMOID)
-                        .weightInit(WeightInit.XAVIER)
+                        .activation(Activation.SIGMOID) // Оставляем SIGMOID
+                        .weightInit(WeightInit.XAVIER)  // Инициализация весов Xavier
                         .build())
                 .build();
     }
