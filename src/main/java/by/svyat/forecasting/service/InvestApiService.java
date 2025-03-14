@@ -44,7 +44,7 @@ public class InvestApiService {
 
         InstrumentShort instrument = getInstrument(tiket, instruments);
 
-        log.debug("Successfully find instrument with tiker: {}", instrument.getTicker());
+        log.debug("Successfully find instrument by tiker: {}", instrument.getTicker());
 
         List<HistoricCandle> candles5min = candlesService.getCandlesByInterval(instrument, CandleInterval.CANDLE_INTERVAL_5_MIN);
 

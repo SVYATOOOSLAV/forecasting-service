@@ -1,5 +1,7 @@
 package by.svyat.forecasting.config;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
@@ -10,14 +12,13 @@ import org.deeplearning4j.nn.weights.WeightInit;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.learning.config.Sgd;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
-import org.springframework.stereotype.Component;
 
-@Component
-public class StockPredictorConfig {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class StockPredictorInitializer {
 
     private static final int OUTPUT_SIZE = 1;
 
-    public MultiLayerConfiguration createNetwork(int inputSize) {
+    public static MultiLayerConfiguration createNetwork(int inputSize) {
          return new NeuralNetConfiguration.Builder()
                 .seed(123)
                 .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
@@ -44,7 +45,7 @@ public class StockPredictorConfig {
                 .build();
     }
 
-    public MultiLayerNetwork multiLayerNetwork(MultiLayerConfiguration config) {
+    public static MultiLayerNetwork multiLayerNetwork(MultiLayerConfiguration config) {
         MultiLayerNetwork model = new MultiLayerNetwork(config);
         model.init();
         return model;
