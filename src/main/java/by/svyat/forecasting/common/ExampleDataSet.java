@@ -41,4 +41,114 @@ public class ExampleDataSet {
                     .setVolume(1200L)
                     .setTime("2025-03-01T06:00:00Z")
     );
+
+    public static List<CandleInfo> candles4h_1 = List.of(
+            new CandleInfo()
+                    .setOpen(new BigDecimal("57.500"))
+                    .setClose(new BigDecimal("57.300"))
+                    .setHigh(new BigDecimal("57.600"))
+                    .setLow(new BigDecimal("57.200"))
+                    .setVolume(1200L)
+                    .setTime("2025-03-01T06:00:00Z")
+    );
+
+    public static List<CandleInfo> candles4h_2 = List.of(
+            new CandleInfo()
+                    .setOpen(new BigDecimal("57.500"))
+                    .setClose(new BigDecimal("57.300"))
+                    .setHigh(new BigDecimal("57.600"))
+                    .setLow(new BigDecimal("57.200"))
+                    .setVolume(1200L)
+                    .setTime("2025-03-01T06:00:00Z")
+    );
+
+    public static List<CandleInfo> candles4h_3 = List.of(
+            new CandleInfo()
+                    .setOpen(new BigDecimal("57.500"))
+                    .setClose(new BigDecimal("57.300"))
+                    .setHigh(new BigDecimal("57.600"))
+                    .setLow(new BigDecimal("57.200"))
+                    .setVolume(1200L)
+                    .setTime("2025-03-01T06:00:00Z")
+    );
+
+    public static List<CandleInfo> candles4h_4 = List.of(
+            new CandleInfo()
+                    .setOpen(new BigDecimal("57.500"))
+                    .setClose(new BigDecimal("57.300"))
+                    .setHigh(new BigDecimal("57.600"))
+                    .setLow(new BigDecimal("57.200"))
+                    .setVolume(1200L)
+                    .setTime("2025-03-01T06:00:00Z")
+    );
+
+    public static List<CandleInfo> candles4h_5 = List.of(
+            new CandleInfo()
+                    .setOpen(new BigDecimal("57.500"))
+                    .setClose(new BigDecimal("57.300"))
+                    .setHigh(new BigDecimal("57.600"))
+                    .setLow(new BigDecimal("57.200"))
+                    .setVolume(1200L)
+                    .setTime("2025-03-01T06:00:00Z")
+    );
+
+    public static List<CandleInfo> candles4h_6 = List.of(
+            new CandleInfo()
+                    .setOpen(new BigDecimal("57.500"))
+                    .setClose(new BigDecimal("57.300"))
+                    .setHigh(new BigDecimal("57.600"))
+                    .setLow(new BigDecimal("57.200"))
+                    .setVolume(1200L)
+                    .setTime("2025-03-01T06:00:00Z")
+    );
+
+    public static List<CandleInfo> candles4h_7 = List.of(
+            new CandleInfo()
+                    .setOpen(new BigDecimal("57.500"))
+                    .setClose(new BigDecimal("57.300"))
+                    .setHigh(new BigDecimal("57.600"))
+                    .setLow(new BigDecimal("57.200"))
+                    .setVolume(1200L)
+                    .setTime("2025-03-01T06:00:00Z")
+    );
+
+    public static List<CandleInfo> candles4h_8 = List.of(
+            new CandleInfo()
+                    .setOpen(new BigDecimal("57.500"))
+                    .setClose(new BigDecimal("57.300"))
+                    .setHigh(new BigDecimal("57.600"))
+                    .setLow(new BigDecimal("57.200"))
+                    .setVolume(1200L)
+                    .setTime("2025-03-01T06:00:00Z")
+    );
+
+    public static List<CandleInfo> candles4h_9 = List.of(
+            new CandleInfo()
+                    .setOpen(new BigDecimal("57.500"))
+                    .setClose(new BigDecimal("57.300"))
+                    .setHigh(new BigDecimal("57.600"))
+                    .setLow(new BigDecimal("57.200"))
+                    .setVolume(1200L)
+                    .setTime("2025-03-01T06:00:00Z")
+    );
+
+    public static List<CandleInfo> candles4h_10 = List.of(
+            new CandleInfo()
+                    .setOpen(new BigDecimal("57.500"))
+                    .setClose(new BigDecimal("57.300"))
+                    .setHigh(new BigDecimal("57.600"))
+                    .setLow(new BigDecimal("57.200"))
+                    .setVolume(1200L)
+                    .setTime("2025-03-01T06:00:00Z")
+    );
+
+    public static List<CandleInfo> candles4h_11 = List.of(
+            new CandleInfo()
+                    .setOpen(new BigDecimal("57.500"))
+                    .setClose(new BigDecimal("57.300"))
+                    .setHigh(new BigDecimal("57.600"))
+                    .setLow(new BigDecimal("57.200"))
+                    .setVolume(1200L)
+                    .setTime("2025-03-01T06:00:00Z")
+    );
 }

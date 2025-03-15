@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -24,7 +26,7 @@ public class ForecastingService {
 
         PredictResponse predictResponse = createPredictResponse(probabilityUp);
 
-        log.debug("Цена акции пойдет вверх с вероятностью {}", predictResponse.getPrediction());
+        log.debug("{}", predictResponse.getPrediction());
 
         return predictResponse;
     }

@@ -22,29 +22,29 @@ public class StockPredictorInitializer {
         return new NeuralNetConfiguration.Builder()
                 .seed(123)
                 .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
-                .updater(new Adam(0.001)) // Использование Adam оптимизатора
+                .updater(new Adam(0.001))
                 .list()
                 .layer(0, new DenseLayer.Builder()
                         .nIn(inputSize)
                         .nOut(20)
-                        .activation(Activation.SIGMOID) // Оставляем SIGMOID
-                        .weightInit(WeightInit.XAVIER)  // Инициализация весов Xavier
-                        .dropOut(0.5)  // Dropout для предотвращения переобучения
-                        .l2(0.0001)    // L2 регуляризация
+                        .activation(Activation.SIGMOID)
+                        .weightInit(WeightInit.XAVIER)
+                        .dropOut(0.5)
+                        .l2(0.0001)
                         .build())
                 .layer(1, new DenseLayer.Builder()
                         .nIn(20)
                         .nOut(10)
-                        .activation(Activation.SIGMOID) // Оставляем SIGMOID
-                        .weightInit(WeightInit.XAVIER)  // Инициализация весов Xavier
-                        .dropOut(0.5)  // Dropout для предотвращения переобучения
-                        .l2(0.0001)    // L2 регуляризация
+                        .activation(Activation.SIGMOID)
+                        .weightInit(WeightInit.XAVIER)
+                        .dropOut(0.5)
+                        .l2(0.0001)
                         .build())
                 .layer(2, new OutputLayer.Builder(LossFunctions.LossFunction.XENT)
                         .nIn(10)
                         .nOut(OUTPUT_SIZE)
-                        .activation(Activation.SIGMOID) // Оставляем SIGMOID
-                        .weightInit(WeightInit.XAVIER)  // Инициализация весов Xavier
+                        .activation(Activation.SIGMOID)
+                        .weightInit(WeightInit.XAVIER)
                         .build())
                 .build();
     }
